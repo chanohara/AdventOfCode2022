@@ -4,11 +4,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class exercise2{
+public class exercise2b{
 
     public static void main( String[] args){
-        exercise2 ex2 = new exercise2();
-        ex2.run();
+        exercise2b ex2b = new exercise2b();
+        ex2b.run();
     }
 
     public void run(){
@@ -23,7 +23,7 @@ public class exercise2{
         int totalScore = 0;
         for(String line : fileContent){
             char opponentMove = line.charAt(0);
-            char yourMove = line.charAt(2);
+            char yourMove = determineYourMove(line.charAt(2), opponentMove);
             totalScore += calcScore(opponentMove, yourMove);
         }
         System.out.println(totalScore);
@@ -55,6 +55,50 @@ public class exercise2{
         }
 
         return score;
+    }
+
+    private char determineYourMove(char result, char opponentMove){
+        char yourMove = ' ';
+
+        if(result == 'Y'){ // Draw
+            switch(opponentMove){
+                case 'A':
+                    yourMove = 'X';
+                    break;
+                case 'B':
+                    yourMove = 'Y';
+                    break;
+                case 'C':
+                    yourMove = 'Z';
+                    break;
+            }
+        } else if(result == 'Z'){ // Win
+            switch(opponentMove){
+                case 'A':
+                    yourMove = 'Y';
+                    break;
+                case 'B':
+                    yourMove = 'Z';
+                    break;
+                case 'C':
+                    yourMove = 'X';
+                    break;
+            }            
+        } else if(result == 'X'){ // Loss
+            switch(opponentMove){
+                case 'A':
+                    yourMove = 'Z';
+                    break;
+                case 'B':
+                    yourMove = 'X';
+                    break;
+                case 'C':
+                    yourMove = 'Y';
+                    break;
+            }
+        }
+
+        return yourMove;
     }
 
     
